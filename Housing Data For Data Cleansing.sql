@@ -11,7 +11,7 @@ From PortfolioProject..NashvilleHousing
 
 /*
 
-Thing we should change in order to have a clean Housing Data: (Steps walk through)
+Things we should change in order to have a clean Housing Data: (Steps walk-through)
 
 -- Standardize Date Format
 -- Populate Property Address data
@@ -147,16 +147,16 @@ Order By 2
 
 
 Select SoldAsVacant, Case When SoldAsVacant = 'Y' Then 'Yes'
-						  When SoldAsVacant = 'N' Then 'No'
-						  Else SoldAsVacant
-					 End
+			  When SoldAsVacant = 'N' Then 'No'
+			  Else SoldAsVacant
+			  End
 From PortfolioProject..NashvilleHousing
 
 Update PortfolioProject..NashvilleHousing
 Set SoldAsVacant = Case When SoldAsVacant = 'Y' Then 'Yes'
-						When SoldAsVacant = 'N' Then 'No'
-						Else SoldAsVacant
-				   End
+			When SoldAsVacant = 'N' Then 'No'
+			Else SoldAsVacant
+			End
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -168,13 +168,13 @@ From PortfolioProject..NashvilleHousing
 
 ;With RowNumCTE As (
 Select *, 
-		ROW_NUMBER() Over (Partition By ParcelID,
-										PropertyAddress,
-										SaleDate,
-										SalePrice,
-										LegalReference
-								Order By UniqueID
-									) Row_Num
+	ROW_NUMBER() Over (Partition By ParcelID,
+					PropertyAddress,
+					SaleDate,
+					SalePrice,
+					LegalReference
+				Order By UniqueID
+			     ) Row_Num
 From PortfolioProject..NashvilleHousing
 --Order By ParcelID
 )
@@ -189,15 +189,15 @@ Order By PropertyAddress
 
 Select * Into PortfolioProject..DuplicatedColumns 
 From (Select *, 
-				ROW_NUMBER() Over (Partition By ParcelID,
-												PropertyAddress,
-												SaleDate,
-												SalePrice,
-												LegalReference
-										Order By UniqueID
-											) Row_Num
-	  From PortfolioProject..NashvilleHousing
-		) As dup
+		ROW_NUMBER() Over (Partition By ParcelID,
+						PropertyAddress,
+						SaleDate,
+						SalePrice,
+						LegalReference
+					Order By UniqueID
+					) Row_Num
+       From PortfolioProject..NashvilleHousing
+	) As dup
 
 Select * 
 From PortfolioProject..DuplicatedColumns 
@@ -209,15 +209,16 @@ Order By PropertyAddress
 
 With RowNumCTE As (
 Select *, 
-		ROW_NUMBER() Over (Partition By ParcelID,
-										PropertyAddress,
-										SaleDate,
-										SalePrice,
-										LegalReference
-								Order By UniqueID
-									) Row_Num
+	ROW_NUMBER() Over (Partition By ParcelID,
+					PropertyAddress,
+					SaleDate,
+					SalePrice,
+					LegalReference
+			       Order By UniqueID
+				) Row_Num
 From PortfolioProject..NashvilleHousing
 )
+
 DELETE 
 From RowNumCTE
 Where Row_Num > 1
@@ -226,13 +227,13 @@ Where Row_Num > 1
 -- Now let's select again and see if there's any more duplicate columns there or not
 With RowNumCTE As (
 Select *, 
-		ROW_NUMBER() Over (Partition By ParcelID,
-										PropertyAddress,
-										SaleDate,
-										SalePrice,
-										LegalReference
-								Order By UniqueID
-									) Row_Num
+	ROW_NUMBER() Over (Partition By ParcelID,
+					PropertyAddress,
+					SaleDate,
+					SalePrice,
+					LegalReference
+			       Order By UniqueID
+				) Row_Num
 From PortfolioProject..NashvilleHousing
 --Order By ParcelID
 )
