@@ -185,6 +185,23 @@ Where Row_Num > 1
 Order By PropertyAddress
 
 
+-- Another Way:
+
+Select	 ParcelID,
+	 PropertyAddress,
+	 SaleDate,
+	 SalePrice,
+	 LegalReference, COUNT(*)
+From PortfolioProject..NashvilleHousing
+Group By  ParcelID,
+	  PropertyAddress,
+	  SaleDate,
+	  SalePrice,
+	  LegalReference   
+Having COUNT(*) > 1
+
+
+
 -- Before we delete dulicate row IT'S NECESSARY to insert them in a temp table FOR SAFETY
 
 Select * Into PortfolioProject..DuplicatedColumns 
